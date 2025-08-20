@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET Exam AI Chat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(to right, #4a6fa5, #166088);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+        }
+        
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 60px 0;
+        }
+        
+        .hero-content {
+            flex: 1;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            color: #166088;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #166088;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        
+        .btn:hover {
+            background: #4a6fa5;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .features {
+            padding: 60px 0;
+            background: white;
+            border-radius: 10px;
+            margin: 40px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #166088;
+            margin-bottom: 50px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #eaeaea;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card i {
+            font-size: 3rem;
+            color: #4a6fa5;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #166088;
+        }
+        
+        .demo {
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .chat-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: #166088;
+            color: white;
+            padding: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .chat-messages {
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 18px;
+            border-radius: 20px;
+            max-width: 70%;
+            line-height: 1.4;
+        }
+        
+        .ai-message {
+            background: #e6f2ff;
+            border-top-left-radius: 5px;
+        }
+        
+        .user-message {
+            background: #166088;
+            color: white;
+            margin-left: auto;
+            border-top-right-radius: 5px;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .chat-input button {
+            margin-left: 10px;
+            background: #166088;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-input button:hover {
+            background: #4a6fa5;
+        }
+        
+        footer {
+            background: #166088;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-bottom {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <h1>NEET Exam AI Chat</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Demo</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Your Personal AI Tutor for NEET Preparation</h2>
+                <p>Get instant answers to your NEET-related questions, clarify concepts, and receive personalized study guidance with our advanced AI-powered chat platform.</p>
+                <a href="#" class="btn">Start Chatting Now</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1584697964358-3e14ca57658b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" alt="NEET Exam Preparation">
+            </div>
+        </section>
+
+        <section class="features">
+            <h2 class="section-title">How Our AI Chat Helps You Succeed</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>24/7 Doubt Resolution</h3>
+                    <p>Get instant answers to your questions anytime, day or night. No more waiting for teacher availability.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-book-medical"></i>
+                    <h3>NEET-Specific Knowledge</h3>
+                    <p>Our AI is specially trained on NCERT syllabus and previous year NEET papers for accurate information.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Personalized Learning</h3>
+                    <p>Receive customized study recommendations based on your strengths and weaknesses.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="demo">
+            <h2 class="section-title">Try Our AI Chat Demo</h2>
+            <div class="chat-container">
+                <div class="chat-header">
+                    NEET AI Assistant
+                </div>
+                <div class="chat-messages">
+                    <div class="message ai-message">
+                        Hello! I'm your NEET preparation assistant. How can I help you today?
+                    </div>
+                    <div class="message user-message">
+                        Can you explain the cardiac cycle?
+                    </div>
+                    <div class="message ai-message">
+                        The cardiac cycle refers to the sequence of events that occur when the heart beats. It consists of two phases: diastole (relaxation) and systole (contraction). During diastole, the chambers fill with blood, and during systole, they contract to pump blood out.
+                    </div>
+                    <div class="message user-message">
+                        What are the important topics in Physics for NEET?
+                    </div>
+                    <div class="message ai-message">
+                        Important Physics topics for NEET include Mechanics, Electrostatics & Current Electricity, Magnetism, Optics, Modern Physics, and Heat & Thermodynamics. Focus on concepts, formulas, and practice numerical problems regularly.
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Ask a question about NEET preparation...">
+                    <button class="btn">Send</button>
+                </div>
+            </div>
+        </section>
+        <script>
+        // Deepseek API chat integration
+        const chatInput = document.querySelector('.chat-input input');
+        const chatButton = document.querySelector('.chat-input button');
+        const chatMessages = document.querySelector('.chat-messages');
+
+        chatButton.addEventListener('click', async function() {
+            const message = chatInput.value.trim();
+            if (message) {
+                // Add user message
+                const userMessageElem = document.createElement('div');
+                userMessageElem.classList.add('message', 'user-message');
+                userMessageElem.textContent = message;
+                chatMessages.appendChild(userMessageElem);
+                chatInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Show loading message
+                const loadingElem = document.createElement('div');
+                loadingElem.classList.add('message', 'ai-message');
+                loadingElem.textContent = 'Thinking...';
+                chatMessages.appendChild(loadingElem);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Send to backend
+                try {
+                    const res = await fetch('/api/phi3', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ prompt: message })
+                    });
+                    const data = await res.json();
+                    loadingElem.textContent = data.response || JSON.stringify(data);
+                } catch (err) {
+                    loadingElem.textContent = 'Error: ' + err;
+                }
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                chatButton.click();
+            }
+        });
+        </script>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>NEET Exam AI Chat</h3>
+                    <p>Your intelligent study partner for NEET preparation, available 24/7 to answer questions and provide guidance.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="#">Home</a></p>
+                    <p><a href="#">Features</a></p>
+                    <p><a href="#">Demo</a></p>
+                    <p><a href="#">Pricing</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> contact@neetaichat.com</p>
+                    <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 NEET Exam AI Chat. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // ...existing code...
+    </script>
+</body>
+</html>
